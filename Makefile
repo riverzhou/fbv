@@ -5,8 +5,11 @@
 
 include Make.conf
 
-CC = g++ 
+STRIP = strip
+CC = gcc
 CFLAGS = -Wall -D_GNU_SOURCE
+LDFLAGS += -static
+LIBS += -lz -lm
 
 SOURCES	= main.c jpeg.c png.c bmp.c fb_display.c vt.c transforms.c
 OBJECTS	= ${SOURCES:.c=.o}
@@ -18,6 +21,7 @@ all: $(OUT)
 
 $(OUT): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $(OUT) $(OBJECTS) $(LIBS)
+	$(STRIP) $(OUT) 
 
 clean:
 	rm -f $(OBJECTS) *~ $$$$~* *.bak core config.log $(OUT)
